@@ -12,7 +12,9 @@ namespace Core.Persistence.Dynamic
         public string? Value { get; set; }
         public string Operator { get; set; }
         public string? Logic { get; set; }
-        public IEnumerable<Filter> Filters { get; set; }
+
+        public IEnumerable<Filter>? Filters { get; set; }
+
         public Filter()
         {
             Field = string.Empty;
@@ -24,6 +26,5 @@ namespace Core.Persistence.Dynamic
             Field = field;
             Operator = @operator;
         }
-
     }
 }

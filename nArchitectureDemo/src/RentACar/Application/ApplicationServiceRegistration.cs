@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+ 
 
 namespace Application
 {
@@ -7,10 +8,13 @@ namespace Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            return services.AddMediatR(configuration =>
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            services.AddMediatR(configuration =>
             {
                 configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             });
+            return services;
         }
     }
 }
