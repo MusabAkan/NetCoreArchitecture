@@ -10,9 +10,9 @@ using System.Reflection;
 namespace Core.Persistence.Repositories
 {
     public class EfRepositoryBase<TEntity, TEntityId, TContext>
-     : IAsyncRepository<TEntity, TEntityId>, IRepository<TEntity, TEntityId>
-     where TEntity : Entity<TEntityId>
-     where TContext : DbContext
+    : IAsyncRepository<TEntity, TEntityId>, IRepository<TEntity, TEntityId>
+    where TEntity : Entity<TEntityId>
+    where TContext : DbContext
     {
         protected readonly TContext Context;
 
@@ -147,8 +147,8 @@ namespace Core.Persistence.Repositories
                     .Metadata.GetForeignKeys()
                     .All(
                         x =>
-                            x.DependentToPrincipal?.IsCollection() == true
-                            || x.PrincipalToDependent?.IsCollection() == true
+                            x.DependentToPrincipal?.IsCollection == true
+                            || x.PrincipalToDependent?.IsCollection == true
                             || x.DependentToPrincipal?.ForeignKey.DeclaringEntityType.ClrType == entity.GetType()
                     ) == false;
             if (hasEntityHaveOneToOneRelation)
@@ -166,17 +166,17 @@ namespace Core.Persistence.Repositories
             var navigations = Context
                 .Entry(entity)
                 .Metadata.GetNavigations()
-                .Where(x => x is { ForeignKey.DeleteBehavior: DeleteBehavior.ClientCascade or DeleteBehavior.Cascade })
+                .Where(x => x is { IsOnDependent: false, ForeignKey.DeleteBehavior: DeleteBehavior.ClientCascade or DeleteBehavior.Cascade })
                 .ToList();
             foreach (INavigation? navigation in navigations)
             {
-                if (navigation.DeclaringEntityType.IsOwned())
+                if (navigation.TargetEntityType.IsOwned())
                     continue;
                 if (navigation.PropertyInfo == null)
                     continue;
 
                 object? navValue = navigation.PropertyInfo.GetValue(entity);
-                if (navigation.IsCollection())
+                if (navigation.IsCollection)
                 {
                     if (navValue == null)
                     {
