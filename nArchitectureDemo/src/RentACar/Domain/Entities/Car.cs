@@ -18,15 +18,15 @@ namespace Domain.Entities
 
         }
 
-        public Car(Guid id, Guid modelId, CarState carState, int kilometer, short modelYear, string plate, short minFindexsCrediRate)
+        public Car(Guid id, Guid modelId, CarState carState, int kilometer, short modelYear, string plate, short minFindexScore)
         {
             Id = id;
             ModelId = modelId;
-            ModelYear = modelYear;
-            Kilometer = kilometer;
-            Plate = plate;
             CarState = carState;
-            MinFindexScore = minFindexsCrediRate;
+            Kilometer = kilometer;
+            ModelYear = modelYear;
+            Plate = plate;
+            MinFindexScore = minFindexScore;
         }
 
     }

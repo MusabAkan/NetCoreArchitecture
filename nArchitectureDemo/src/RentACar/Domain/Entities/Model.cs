@@ -4,7 +4,7 @@ namespace Domain.Entities
     public class Model : Entity<Guid>
     {
         public Guid BrandId { get; set; }
-        public Guid FueldId { get; set; }
+        public Guid FuelId { get; set; }
         public Guid TransmissionId { get; set; }
         public string Name { get; set; }
         public decimal DailyPrice { get; set; }
@@ -12,7 +12,7 @@ namespace Domain.Entities
 
         public virtual Brand? Brand { get; set; }
         public virtual Fuel? Fuel { get; set; }
-        public virtual Transmission? Transmission { get; }
+        public virtual Transmission? Transmission { get; set;}
 
         public virtual ICollection<Car> Cars { get; set; }
 
@@ -21,13 +21,12 @@ namespace Domain.Entities
             Cars = new HashSet<Car>();
         }
 
-        public Model(Guid id, Guid brandId, Guid fuelId, Guid transmissionransId, string name, decimal dailyPrice,
-            string imageUrl) : this()
+        public Model(Guid id, Guid brandId, Guid fuelId, Guid transmissionId, string name, decimal dailyPrice,string imageUrl) : this()
         {
             Id = id;
             BrandId = brandId;
-            FueldId = fuelId;
-            TransmissionId = transmissionransId;
+            FuelId = fuelId;
+            TransmissionId = transmissionId;
             Name = name;
             DailyPrice = dailyPrice;
             ImageUrl = imageUrl;
