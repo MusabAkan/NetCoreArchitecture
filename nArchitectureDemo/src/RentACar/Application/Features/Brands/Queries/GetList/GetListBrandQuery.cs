@@ -10,7 +10,7 @@ namespace Application.Features.Brands.Queries.GetList
 {
     public class GetListBrandQuery : IRequest<GetListResponse<GetListBrandListItemDto>>
     {
-        public PageRequest PageResquest { get; set; }
+        public PageRequest PageRequest { get; set; }
 
         public class GetListBrandQueryHandler : IRequestHandler<GetListBrandQuery, GetListResponse<GetListBrandListItemDto>>
         {
@@ -26,8 +26,8 @@ namespace Application.Features.Brands.Queries.GetList
             public async Task<GetListResponse<GetListBrandListItemDto>> Handle(GetListBrandQuery request, CancellationToken cancellationToken)
             {
                 Paginate<Brand> brands = await _brandRepository.GetListAsync(
-                      index: request.PageResquest.PageIndex,
-                      size: request.PageResquest.PageSize,
+                      index: request.PageRequest.PageIndex,
+                      size: request.PageRequest.PageSize,
                       cancellationToken: cancellationToken);
 
                 GetListResponse<GetListBrandListItemDto> response = _mapper.Map<GetListResponse<GetListBrandListItemDto>>(brands);

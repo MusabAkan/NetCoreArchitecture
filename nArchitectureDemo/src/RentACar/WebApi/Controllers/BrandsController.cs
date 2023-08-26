@@ -26,7 +26,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
-            GetListBrandQuery getListBrandQuery = new() { PageResquest = pageRequest };
+            GetListBrandQuery getListBrandQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListBrandListItemDto> response = await Mediator.Send(getListBrandQuery);
             return Ok(response);
         }
