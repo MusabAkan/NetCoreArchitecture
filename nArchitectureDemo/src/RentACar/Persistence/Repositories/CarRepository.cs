@@ -3,12 +3,11 @@ using Core.Persistence.Repositories;
 using Domain.Entities;
 using Persistence.Contexts;
 
-namespace Persistence.Repositories
+namespace Persistence.Repositories;
+
+public class CarRepository : EfRepositoryBase<Car, Guid, BaseDbContext>, ICarRepository
 {
-    public class CarRepository : EfRepositoryBase<Car, Guid, BaseDbContext>, ICarRepository
+    public CarRepository(BaseDbContext context) : base(context)
     {
-        public CarRepository(BaseDbContext context) : base(context)
-        {
-        }
     }
 }

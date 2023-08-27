@@ -5,35 +5,41 @@ using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities;
 using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Application.Features.Brands.Queries.GetList
+namespace Application.Features.Brands.Queries.GetList;
+
+public class GetListBrandQuery:IRequest<GetListResponse<GetListBrandListItemDto>>
 {
-    public class GetListBrandQuery : IRequest<GetListResponse<GetListBrandListItemDto>>
+    public PageRequest PageRequest { get; set; }
+
+    public class GetListBrandQueryHandler : IRequestHandler<GetListBrandQuery, GetListResponse<GetListBrandListItemDto>>
     {
-        public PageRequest PageRequest { get; set; }
+        private readonly IBrandRepository _brandRepository;
+        private readonly IMapper _mapper;
 
-        public class GetListBrandQueryHandler : IRequestHandler<GetListBrandQuery, GetListResponse<GetListBrandListItemDto>>
+        public GetListBrandQueryHandler(IBrandRepository brandRepository, IMapper mapper)
         {
-            readonly IBrandRepository _brandRepository;
-            readonly IMapper _mapper;
+            _brandRepository = brandRepository;
+            _mapper = mapper;
+        }
 
-            public GetListBrandQueryHandler(IBrandRepository brandRepository, IMapper mapper)
-            {
-                _brandRepository = brandRepository;
-                _mapper = mapper;
-            }
+        public async Task<GetListResponse<GetListBrandListItemDto>> Handle(GetListBrandQuery request, CancellationToken cancellationToken)
+        {
+            Paginate<Brand> brands =  await _brandRepository.GetListAsync(
+                index: request.PageRequest.PageIndex,
+                size: request.PageRequest.PageSize,
+                cancellationToken : cancellationToken,
+                withDeleted:true
+                );
 
-            public async Task<GetListResponse<GetListBrandListItemDto>> Handle(GetListBrandQuery request, CancellationToken cancellationToken)
-            {
-                Paginate<Brand> brands = await _brandRepository.GetListAsync(
-                      index: request.PageRequest.PageIndex,
-                      size: request.PageRequest.PageSize,
-                      cancellationToken: cancellationToken);
+            GetListResponse<GetListBrandListItemDto> response = _mapper.Map<GetListResponse<GetListBrandListItemDto>>(brands);
+            return response;
 
-                GetListResponse<GetListBrandListItemDto> response = _mapper.Map<GetListResponse<GetListBrandListItemDto>>(brands);
-                return response;
-
-            }
         }
     }
 }

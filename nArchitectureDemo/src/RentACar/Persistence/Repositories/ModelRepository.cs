@@ -3,12 +3,11 @@ using Core.Persistence.Repositories;
 using Domain.Entities;
 using Persistence.Contexts;
 
-namespace Persistence.Repositories
+namespace Persistence.Repositories;
+
+public class ModelRepository : EfRepositoryBase<Model, Guid, BaseDbContext>, IModelRepository
 {
-    public class ModelRepository : EfRepositoryBase<Model, Guid, BaseDbContext>, IModelRepository
+    public ModelRepository(BaseDbContext context) : base(context)
     {
-        public ModelRepository(BaseDbContext context) : base(context)
-        {
-        }
     }
 }

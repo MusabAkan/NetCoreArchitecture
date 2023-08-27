@@ -7,33 +7,29 @@ using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Application.Features.Brands.Profiles
+namespace Application.Features.Brands.Profiles;
+
+public class MappingProfiles:Profile
 {
-    public class MappingProfiles : Profile
+    public MappingProfiles()
     {
-        public MappingProfiles()
-        {
-            #region Command
-            CreateMap<Brand, CreateBrandCommand>().ReverseMap();
-            CreateMap<Brand, UpdatedBrandCommand>().ReverseMap();
-            CreateMap<Brand, DeletedBrandCommand>().ReverseMap();
+        CreateMap<Brand, CreateBrandCommand>().ReverseMap();
+        CreateMap<Brand, CreatedBrandResponse>().ReverseMap();
 
-            #endregion
+        CreateMap<Brand, UpdateBrandCommand>().ReverseMap();
+        CreateMap<Brand, UpdatedBrandResponse>().ReverseMap();
 
-            #region Response
-            CreateMap<Brand, CreateBrandResponse>().ReverseMap();
-            CreateMap<Brand, GetByIdBrandResponse>().ReverseMap();
-            CreateMap<Brand, UpdatedBrandResponse>().ReverseMap();
-            CreateMap<Brand, DeletedBrandResponse>().ReverseMap();
-            #endregion
+        CreateMap<Brand, DeleteBrandCommand>().ReverseMap();
+        CreateMap<Brand, DeletedBrandResponse>().ReverseMap();
 
-            #region Dto
-            CreateMap<Paginate<Brand>, GetListResponse<GetListBrandListItemDto>>().ReverseMap();
-            CreateMap<Brand, GetListBrandListItemDto>().ReverseMap();
-            #endregion
-
-
-        }
+        CreateMap<Brand, GetListBrandListItemDto>().ReverseMap();
+        CreateMap<Brand, GetByIdBrandResponse>().ReverseMap();
+        CreateMap<Paginate<Brand>, GetListResponse<GetListBrandListItemDto>>().ReverseMap();
     }
 }

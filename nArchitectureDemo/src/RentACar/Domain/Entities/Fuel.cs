@@ -1,20 +1,22 @@
 ﻿using Core.Persistence.Repositories;
-namespace Domain.Entities
+
+namespace Domain.Entities;
+
+public class Fuel : Entity<Guid>
 {
-    public class Fuel : Entity<Guid>
+    public string Name { get; set; }
+
+    public virtual ICollection<Model> Models { get; set; }
+
+    public Fuel()
     {
-        public string Name { get; set; }
-        public virtual ICollection<Model> Models { get; set; }
+        Models = new HashSet<Model>();
+    }
 
-        public Fuel()
-        {
-            Models = new HashSet<Model>();
-        }
-
-        public Fuel(Guid id, string name) : this()
-        {
-            Id = id;
-            Name = name;
-        }
+    public Fuel(Guid id, string name)
+        : this()
+    {
+        Id = id;
+        Name = name;
     }
 }
